@@ -97,6 +97,12 @@ def do_transformation (csv_path):
     df['above_18'] = df['dob_converted'].apply( lambda x: is_above_18(x) )
     
     
+    # Check if valid applicant
+    df['is_valid_applicant'] = df.apply( 
+        lambda row: row['is_valid_mobile_no'] and row['above_18'] and row['is_valid_email']
+        , axis=1 )
+    
+    
     # Finally return dataframe
     return df
 
