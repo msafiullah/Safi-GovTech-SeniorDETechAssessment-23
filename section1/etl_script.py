@@ -63,6 +63,9 @@ def is_above_18 (dob):
 def split_name (name):
     # Returns spli name tuple (first_name, last_name)
     
+    if name == None:
+        return (None, None)
+    
     # Checks if first part of name has non-alphabet char suggesting name prefix
     # Like Mr., Dr., etc
     def has_non_alpha_in_first_part (name):
@@ -102,6 +105,10 @@ def do_transformation (csv_path):
         df[column] = df[column].str.strip()
 
    
+    # Convert Null or NaN names to None
+    df['name'].where(pd.notnull(df['name']), None)
+    
+    
     # Clean mobile number
     df['mobile_no'] = df['mobile_no'].apply(lambda x: clean_mobile_no(x))
 
@@ -126,15 +133,15 @@ def do_transformation (csv_path):
     df['above_18'] = df['dob_converted'].apply( lambda x: is_above_18(x) )
     
     
-    # Check if valid applicant
-    df['is_valid_applicant'] = df.apply( 
-        lambda row: row['is_valid_mobile_no'] and row['above_18'] and row['is_valid_email']
-        , axis=1 )
-    
-    
     # Split name
     df['split_name'] = df['name'].apply( lambda x: split_name(x) )
     df['first_name'], df['last_name'] = zip(*df.split_name)
+    
+    
+    # Check if valid applicant
+    df['is_valid_applicant'] = df.apply( 
+        lambda row: row['is_valid_mobile_no'] and row['above_18'] and row['is_valid_email'] and row['last_name'] != None
+        , axis=1 )
     
     
     # Construct member ID
@@ -155,3 +162,4 @@ if __name__ == "__main__":
     
     df = do_transformation('~/Downloads/applications_dataset_1.csv')
     print(df)
+    
