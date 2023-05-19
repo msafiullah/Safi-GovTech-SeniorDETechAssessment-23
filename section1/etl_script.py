@@ -145,8 +145,8 @@ def do_transformation (csv_path):
             , axis=1)
     
     
-    # Finally return dataframe
-    return df
+    # Finally return subset of columns
+    return df[['name', 'first_name', 'last_name', 'email', 'date_of_birth', 'mobile_no', 'above_18', 'member_id']]
 
 
 
