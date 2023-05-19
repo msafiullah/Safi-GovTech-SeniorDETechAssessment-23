@@ -137,6 +137,14 @@ def do_transformation (csv_path):
     df['first_name'], df['last_name'] = zip(*df.split_name)
     
     
+    # Construct member ID
+    df['member_id'] = df.apply(
+            lambda row: 
+                row['last_name'] + '_' + utility.calculate_hash(row['date_of_birth'])[0:5] if row['is_valid_applicant'] == True 
+                else None
+            , axis=1)
+    
+    
     # Finally return dataframe
     return df
 
