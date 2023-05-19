@@ -153,15 +153,20 @@ def do_transformation (csv_path):
     
     
     # Finally return subset of columns
-    return df[['name', 'first_name', 'last_name', 'email', 'date_of_birth', 'mobile_no', 'above_18', 'member_id']]
-
+    df = df[['name', 'first_name', 'last_name', 'email', 'date_of_birth', 'mobile_no', 'above_18', 'member_id']]
+    
+    df_successful = df[~df['member_id'].isnull()]
+    df_unsuccessful = df[df['member_id'].isnull()]
+    
+    return df_successful, df_unsuccessful
 
 
 
 if __name__ == "__main__":
     
-    df = do_transformation('~/Downloads/applications_dataset_1.csv')
-    df_successful = df[~df['member_id'].isnull()]
-    df_unsuccessful = df[df['member_id'].isnull()]
-
+    df1_successful, df1_unsuccessful = do_transformation('~/Downloads/applications_dataset_1.csv')
+    df2_successful, df2_unsuccessful = do_transformation('~/Downloads/applications_dataset_2.csv')
+    
+    df_successful = pd.concat([df1_successful, df2_successful])
+    df_unsuccessful = pd.concat([df1_unsuccessful, df2_unsuccessful])
     
