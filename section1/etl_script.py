@@ -71,6 +71,9 @@ def do_transformation (csv_path):
     df['is_valid_mobile_no'] = df['mobile_no'].apply(lambda x: is_valid_mobile_no(x))
    
    
+    # Validate email
+    df['is_valid_email'] = df['email'].apply(lambda x: is_valid_email(x))
+    
     
     # Finally return dataframe
     return df
