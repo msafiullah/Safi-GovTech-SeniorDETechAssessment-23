@@ -52,6 +52,13 @@ def is_valid_email (email):
 
 
 
+def is_above_18 (dob):
+    # Returns True/False
+    # Checks if age is above 18 as of 1 Jan 2022 based on given DOB
+    delta = np.datetime64('2022-01-01') - dob
+    return ( delta / np.timedelta64(1, 'Y') ) > 18
+
+
 
 def do_transformation (csv_path):
     # Returns a dataframe after transformation
@@ -84,6 +91,10 @@ def do_transformation (csv_path):
     df['date_of_birth'] = np.datetime_as_string( df['dob_converted'], unit='D')
     # Remove hyphen (YYYYMMDD)
     df['date_of_birth'] = df['date_of_birth'].apply( lambda x: x.replace('-', '') )
+    
+    
+    # Check if >18 years old as of 1 Jan 2022
+    df['above_18'] = df['dob_converted'].apply( lambda x: is_above_18(x) )
     
     
     # Finally return dataframe
