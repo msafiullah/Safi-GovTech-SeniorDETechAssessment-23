@@ -37,6 +37,20 @@ def clean_mobile_no (mobile_no):
 
 
 
+def is_valid_email (email):
+    # Returns True/False
+    # Checks if emai domain and suffix is valid
+
+    # Regex to check valid email suffix according to requirement
+    regex = "((?!-)[A-Za-z0-9-]" + "{1,63}(?<!-)\\.)" + "+(?:com|net)$"
+    match = re.search(regex, email)
+    if match != None:
+        return True
+    return False
+
+
+
+
 def do_transformation (csv_path):
     # Returns a dataframe after transformation
     # Takes in the path to CSV dataset
