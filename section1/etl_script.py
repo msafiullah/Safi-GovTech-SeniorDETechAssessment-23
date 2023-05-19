@@ -60,6 +60,35 @@ def is_above_18 (dob):
 
 
 
+def split_name (name):
+    # Returns spli name tuple (first_name, last_name)
+    
+    # Checks if first part of name has non-alphabet char suggesting name prefix
+    # Like Mr., Dr., etc
+    def has_non_alpha_in_first_part (name):
+        first_part = name.split(' ')[0]
+        matches = re.findall("[^A-Za-z ]",first_part)
+        res = len(matches) > 0
+        return res
+
+    def split_name_with_prefix (name):
+        # Split and get everything within first 2 spaces for first name, rest is last name
+        split_name = name.split(" ", 2)
+        # To remove prefix like Mr. Mrs. Dr. etc, use split_name[1] for first name
+        return ( ' '.join(split_name[:-1]), split_name[-1] )
+
+    def split_name_without_prefix (name):
+        # Split and get everything within first 1 space for first name, rest is last name
+        split_name = name.split(" ", 1)
+        return ( split_name[0], split_name[-1] )
+
+    if has_non_alpha_in_first_part(name) == True:
+        return split_name_with_prefix(name) 
+    else:
+        return split_name_without_prefix(name)
+
+
+
 def do_transformation (csv_path):
     # Returns a dataframe after transformation
     # Takes in the path to CSV dataset
@@ -101,6 +130,11 @@ def do_transformation (csv_path):
     df['is_valid_applicant'] = df.apply( 
         lambda row: row['is_valid_mobile_no'] and row['above_18'] and row['is_valid_email']
         , axis=1 )
+    
+    
+    # Split name
+    df['split_name'] = df['name'].apply( lambda x: split_name(x) )
+    df['first_name'], df['last_name'] = zip(*df.split_name)
     
     
     # Finally return dataframe
