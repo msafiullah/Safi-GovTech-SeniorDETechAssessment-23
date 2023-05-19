@@ -13,6 +13,10 @@ import utility
 
 
 
+execution_date_hour = np.datetime_as_string(np.datetime64('today', 'h'))
+
+
+
 """
 Transformation functions
 """
@@ -170,3 +174,5 @@ if __name__ == "__main__":
     df_successful = pd.concat([df1_successful, df2_successful])
     df_unsuccessful = pd.concat([df1_unsuccessful, df2_unsuccessful])
     
+    df_successful.to_csv("./applications_successful/applications_{}.csv".format(execution_date_hour), index=False)
+    df_unsuccessful.to_csv("./applications_unsuccessful/applications_{}.csv".format(execution_date_hour), index=False)
