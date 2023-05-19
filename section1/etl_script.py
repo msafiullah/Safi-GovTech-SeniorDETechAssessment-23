@@ -161,5 +161,7 @@ def do_transformation (csv_path):
 if __name__ == "__main__":
     
     df = do_transformation('~/Downloads/applications_dataset_1.csv')
-    print(df)
+    df_successful = df[~df['member_id'].isnull()]
+    df_unsuccessful = df[df['member_id'].isnull()]
+
     
