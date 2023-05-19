@@ -8,6 +8,8 @@ Python script to perform ETL for 2 datasets.
 
 import pandas as pd
 import numpy as np
+import re
+import utility
 
 
 
@@ -73,6 +75,15 @@ def do_transformation (csv_path):
    
     # Validate email
     df['is_valid_email'] = df['email'].apply(lambda x: is_valid_email(x))
+    
+    
+    # Convert dob to numpy datetime64 data type
+    df['dob_converted'] = df['date_of_birth'].apply( lambda x: utility.convert_to_datetime(x) )
+
+    # Convert to string in YYYY-MM-DD format
+    df['date_of_birth'] = np.datetime_as_string( df['dob_converted'], unit='D')
+    # Remove hyphen (YYYYMMDD)
+    df['date_of_birth'] = df['date_of_birth'].apply( lambda x: x.replace('-', '') )
     
     
     # Finally return dataframe
