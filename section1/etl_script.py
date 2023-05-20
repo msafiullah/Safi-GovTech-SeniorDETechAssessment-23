@@ -173,14 +173,34 @@ def do_transformation (csv_path):
     return df_successful, df_unsuccessful
 
 
+def main (input_path_arr):
+    # Takes in multiple paths for dataset CSVs
+    # Returns consolidated and processed dataframes for successful and unsuccessful applications
+    
+    # Store successful and unsuccessful application records for each dataset processed
+    df_arr_successful = []
+    df_arr_unsuccessful = []
+    
+    for each_dataset_path in input_path_arr:
+        df_successful, df_unsuccessful = do_transformation(each_dataset_path)
+        
+        # Push processed results for this dataset to array
+        df_arr_successful.append( df_successful )
+        df_arr_unsuccessful.append( df_unsuccessful )
+
+    
+    # Merge dataframes
+    df_merged_successful = pd.concat( df_arr_successful )
+    df_merged_unsuccessful = pd.concat( df_arr_unsuccessful )
+    
+    return df_merged_successful, df_merged_unsuccessful
+
 
 if __name__ == "__main__":
     
-    df1_successful, df1_unsuccessful = do_transformation('~/Downloads/applications_dataset_1.csv')
-    df2_successful, df2_unsuccessful = do_transformation('~/Downloads/applications_dataset_2.csv')
+    input_csv_paths = ['~/Downloads/applications_dataset_1.csv', '~/Downloads/applications_dataset_2.csv']
     
-    df_successful = pd.concat([df1_successful, df2_successful])
-    df_unsuccessful = pd.concat([df1_unsuccessful, df2_unsuccessful])
+    df_successful , df_unsuccessful = main(input_csv_paths)
     
     df_successful.to_csv("./applications_successful/applications_{}.csv".format(execution_date_hour), index=False)
     df_unsuccessful.to_csv("./applications_unsuccessful/applications_{}.csv".format(execution_date_hour), index=False)
