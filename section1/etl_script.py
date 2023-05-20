@@ -113,6 +113,9 @@ def do_transformation (csv_path):
     df['name'].where(pd.notnull(df['name']), None)
     
     
+    # Backup original mobile number column
+    df['mobile_no_orig'] = df['mobile_no']
+    
     # Clean mobile number
     df['mobile_no'] = df['mobile_no'].apply(lambda x: clean_mobile_no(x))
 
@@ -123,6 +126,9 @@ def do_transformation (csv_path):
     # Validate email
     df['is_valid_email'] = df['email'].apply(lambda x: is_valid_email(x))
     
+    
+    # Backup original dob column
+    df['date_of_birth_orig'] = df['date_of_birth']
     
     # Convert dob to numpy datetime64 data type
     df['dob_converted'] = df['date_of_birth'].apply( lambda x: utility.convert_to_datetime(x) )
