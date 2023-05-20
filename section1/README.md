@@ -82,3 +82,31 @@ Look for the `applications_YYYYMMDD_HH.csv` files in `applications_successful` a
 ![Screenshot of ETL logs in Airflow - ss-airflow-etl-log.png](https://raw.githubusercontent.com/msafiullah/Safi-GovTech-SeniorDETechAssessment-23/main/section1/ss-airflow-etl-log.png?token=GHSAT0AAAAAACC3L4CAOQWQVLMHHZAMEEMUZDIOM7A)
 - Logs are also accessible on Airflow Worker nodes at `$AIRFLOW_HOME/logs/dag_id=safi_ecommerce_membership_processing_etl/`
 - You can find sample log file here: `Safi-GovTech-SeniorDETechAssessment-23/section1/sample_log_file.log`
+
+# Known Issues
+
+## Name Prefix
+
+- Name prefix like _Miss_, or _Professor_, etc is currently not removed. ETL code assumes that name prefix ends with a period like _Miss._, or _Mrs._ and preserves them for data integrity purposes.
+- There is a non-exhaustive list of name prefix, thus, each one of them can be handled by defining a dictionary list of name prefix in a config file, and specifically handling them in the code.
+- Table below shows an example of this issue.
+
+| Full Name | First Name | Last Name | Member ID |
+|--|--|--|--|
+Miss Amber Burnett | Miss | Amber Burnett | Amber Burnett_xxxxx
+
+- Below case is handled, where the prefix is with period. Such prefix will be preserved as part of first name.
+
+| First Name | Last Name | Member ID |
+|--|--|--|
+Mr. Bryan | Porter | Porter_e9e42
+
+## Name Suffix
+
+- Currently, name suffix like _DDS_, or _MD_, etc is  not removed. ETL code will preserve these name suffix as part of the last name. 
+- Table below shows an example of this issue.
+
+| Full Name | First Name | Last Name | Member ID |
+|--|--|--|--|
+Kelly Smith DDS | Kelly | Smith DDS | Smith DDS_xxxxx
+
