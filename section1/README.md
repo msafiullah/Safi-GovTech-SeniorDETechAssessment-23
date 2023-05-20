@@ -52,3 +52,32 @@ python3 etl_script.py
 
 3. Check CSV outputs
 Look for the `applications_YYYYMMDD_HH.csv` files in `applications_successful` and `applications_unsuccessful` folders.
+
+# Airflow DAG
+- ETL workflow is scheduled at the 5th minute of every hour. It assumes that input datafiles are made available by then. 
+
+- The `etl_dag.py` DAG file defines following variables at the beginnin of the script.
+
+| Variable | Description |
+|--|--|
+| `input_dir` | Path of input CSV files. |
+| `input_file_pattern` | File pattern of input CSV files. Example, `applications_dataset_*.csv` |
+| `successful_output_dir` | Folder to write output CSV files for **successful** applicants. |
+| `unsuccessful_output_dir` | Folder to write output CSV files for **unsuccessful** applicants. |
+| `archive_dir` | Folder to move successfully processed input CSV files. |
+
+- The airflow DAG has three tasks that are run in sequence.
+
+![Screenshot of Airflow DAG](https://raw.githubusercontent.com/msafiullah/Safi-GovTech-SeniorDETechAssessment-23/main/section1/ss-airflow-dag.png?token=GHSAT0AAAAAACC3L4CBD7N3TMN6LRXN2R6SZDIOLMA)
+
+| Task S/N | Task ID | Description
+|--|--|--|
+| 1 | check_input_csvs | Verify if `applications_dataset_*.csv` files exist in INPUT_DIR. |
+| 2 | execute_python_etl_code | Take in list of input CSV file paths, process each CSV file, consolidate data, and, output result CSV files. |
+| 3 | archive_input_csvs | Move successfully processed `applications_dataset_*.csv` files to archive folder `input_YYYYMMDD_HH`. |
+
+# ETL Log
+- Log is ouput to STDOUT (i.e. console) if you are running the ETL script on your local machine.
+- Log is capured and accessible via Airflow's logs page if you deploy the ETL DAG to Airflow.
+![Screenshot of ETL logs in Airflow](https://raw.githubusercontent.com/msafiullah/Safi-GovTech-SeniorDETechAssessment-23/main/section1/ss-airflow-etl-log.png?token=GHSAT0AAAAAACC3L4CAOQWQVLMHHZAMEEMUZDIOM7A)
+- Logs are also accessible on Airflow Worker nodes at `$AIRFLOW_HOME/logs/dag_id=safi_ecommerce_membership_processing_etl/`
