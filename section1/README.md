@@ -81,3 +81,4 @@ Look for the `applications_YYYYMMDD_HH.csv` files in `applications_successful` a
 - Log is capured and accessible via Airflow's logs page if you deploy the ETL DAG to Airflow.
 ![Screenshot of ETL logs in Airflow - ss-airflow-etl-log.png](https://raw.githubusercontent.com/msafiullah/Safi-GovTech-SeniorDETechAssessment-23/main/section1/ss-airflow-etl-log.png?token=GHSAT0AAAAAACC3L4CAOQWQVLMHHZAMEEMUZDIOM7A)
 - Logs are also accessible on Airflow Worker nodes at `$AIRFLOW_HOME/logs/dag_id=safi_ecommerce_membership_processing_etl/`
+- You can find sample log file here: `Safi-GovTech-SeniorDETechAssessment-23/section1/sample_log_file.log`
