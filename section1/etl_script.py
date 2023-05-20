@@ -156,10 +156,10 @@ def do_transformation (csv_path):
             , axis=1)
     
     
-    # Finally return subset of columns
-    df = df[['name', 'first_name', 'last_name', 'email', 'date_of_birth', 'mobile_no', 'above_18', 'member_id']]
-    
     df_successful = df[~df['member_id'].isnull()]
+    # Select subset of columns for successful applications
+    df_successful = df_successful[['first_name', 'last_name', 'email', 'date_of_birth', 'mobile_no', 'above_18', 'member_id']]
+    
     df_unsuccessful = df[df['member_id'].isnull()]
     
     return df_successful, df_unsuccessful
