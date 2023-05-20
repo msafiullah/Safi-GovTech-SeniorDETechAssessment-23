@@ -168,7 +168,7 @@ def do_transformation (csv_path):
     
     df_unsuccessful = df[df['member_id'].isnull()]
     # Select original and new columns for unsuccessful applications
-    df_successful = df_successful[['name', 'email', 'date_of_birth_orig', 'mobile_no_orig', 'first_name', 'last_name', 'date_of_birth', 'mobile_no', 'above_18']]
+    df_unsuccessful = df_unsuccessful[['name', 'email', 'date_of_birth_orig', 'mobile_no_orig', 'first_name', 'last_name', 'date_of_birth', 'mobile_no', 'above_18']]
     
     return df_successful, df_unsuccessful
 
