@@ -1,4 +1,4 @@
-datefinder==0.7.3
-numpy==1.23.3
-pandas==1.5.0
-pydt==0.1.0
+datefinder
+numpy
+pandas
+pydt
