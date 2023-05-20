@@ -206,5 +206,5 @@ if __name__ == "__main__":
     succ_output_dir = './applications_successful/'
     unsucc_output_dir = './applications_unsuccessful/'
     
-    df_successful , df_unsuccessful = main(input_csv_paths, succ_output_dir, unsucc_output_dir)
+    main(input_csv_paths, succ_output_dir, unsucc_output_dir)
     
