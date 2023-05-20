@@ -267,7 +267,7 @@ def main (input_path_arr, successful_output_dir, unsuccessful_output_dir):
 
 if __name__ == "__main__":
 
-    input_csv_paths = ['~/Downloads/applications_dataset_1.csv', '~/Downloads/applications_dataset_2.csv']
+    input_csv_paths = ['./input/applications_dataset_1.csv', './input/applications_dataset_2.csv']
     succ_output_dir = './applications_successful/'
     unsucc_output_dir = './applications_unsuccessful/'
     
