@@ -9,11 +9,16 @@ Python script to perform ETL for 2 datasets.
 import pandas as pd
 import numpy as np
 import re
-import utility
 import logging
 from datetime import datetime
 from pathlib import Path
 
+# Add current script path to module search
+import sys
+from os.path import dirname
+sys.path.append(dirname(__file__))
+
+import utility
 
 
 execution_date_hour = datetime.now().strftime("%Y%m%d_%H")
