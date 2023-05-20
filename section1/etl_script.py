@@ -11,10 +11,12 @@ import numpy as np
 import re
 import utility
 import logging
+from datetime import datetime
 
 
 
-execution_date_hour = np.datetime_as_string(np.datetime64('today', 'h'))
+execution_date_hour = datetime.now().strftime("%Y%m%d_%H")
+
 
 
 # Create a custom logger
