@@ -244,7 +244,7 @@ def main (input_path_arr, successful_output_dir, unsuccessful_output_dir):
     
     # Write CSV outputs
     succ_output_path = successful_output_dir + "/applications_{}.csv".format(execution_date_hour)
-    unsucc_output_path = unsuccessful_output_dir + "./applications_{}.csv".format(execution_date_hour)
+    unsucc_output_path = unsuccessful_output_dir + "/applications_{}.csv".format(execution_date_hour)
     
     logger.info("Writing output CSVs to paths: [{}] and [{}]".format(succ_output_path, unsucc_output_path))
     
