@@ -12,6 +12,7 @@ import re
 import utility
 import logging
 from datetime import datetime
+from pathlib import Path
 
 
 
@@ -243,6 +244,10 @@ def main (input_path_arr, successful_output_dir, unsuccessful_output_dir):
     df_merged_successful = pd.concat( df_arr_successful )
     df_merged_unsuccessful = pd.concat( df_arr_unsuccessful )
     
+        
+    # Create output dir if not exists
+    Path(successful_output_dir).mkdir(parents=True, exist_ok=True)
+    Path(unsuccessful_output_dir).mkdir(parents=True, exist_ok=True)
     
     # Write CSV outputs
     succ_output_path = successful_output_dir + "/applications_{}.csv".format(execution_date_hour)
