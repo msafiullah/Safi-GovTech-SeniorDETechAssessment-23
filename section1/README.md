@@ -23,3 +23,32 @@
 - First digit must be 8 or 9 according to Singapore telco rules.
 - Must be 8 digits in total.
 - +65 or 0065 country code prefix will be removed.
+
+# Folder Structure
+
+| File | Description |
+|--|--|
+| README.md | Documentation |
+| requirements.txt | Python module requirements to be installed with pip3. |
+| etl_dag.py | Airflow DAG is defined here. |
+| etl_script.py | Main ETL code that processes the input datasets and writes out result CSVs. |
+| utility.py | Helper functions used by main `etl_script.py` python code. |
+| input | CSV datafiles to be processed are placed here. File pattern is assumed to be `applications_dataset_*.csv` |
+| applications_successful | Output CSV of **successful** applicants will be written here as `applications_YYYYMMDD_HH.csv` |
+| applications_unsuccessful | Output CSV of **unsuccessful** applicants will be written here as `applications_YYYYMMDD_HH.csv` |
+
+
+# Running Locally
+You can execute the ETL on your MacOS or Linux machine.
+
+1. Clone this repo
+
+2. Execute below commands
+```
+cd section1
+pip3 install --user -r requirements.txt
+python3 etl_script.py
+```
+
+3. Check CSV outputs
+Look for the `applications_YYYYMMDD_HH.csv` files in `applications_successful` and `applications_unsuccessful` folders.
