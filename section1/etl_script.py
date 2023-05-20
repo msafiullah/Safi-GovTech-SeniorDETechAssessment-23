@@ -197,8 +197,7 @@ def main (input_path_arr, successful_output_dir, unsuccessful_output_dir):
     # Write CSV outputs
     df_merged_successful.to_csv( successful_output_dir + "/applications_{}.csv".format(execution_date_hour), index=False )
     df_merged_unsuccessful.to_csv( unsuccessful_output_dir + "./applications_{}.csv".format(execution_date_hour), index=False )
-    
-    return df_merged_successful, df_merged_unsuccessful
+
 
 
 if __name__ == "__main__":
