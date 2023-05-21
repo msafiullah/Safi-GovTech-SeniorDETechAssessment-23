@@ -1,6 +1,6 @@
 # E-commerce Data Model
 
-- A total of 18 tables are created to support the e-commerce website application.
+- A total of 19 tables are created to support the e-commerce website application.
 - Refer to ER diagram `ecom-er-diagram.png`
 
 ## About the tables
@@ -25,6 +25,7 @@
 - Data about orders (i.e purchase transactions)
 	- orders
 	- order_details
+	- vouchers_applied
 	- payment_details
 	- shipment
 - Data about promotions and vouchers
@@ -80,7 +81,8 @@ ecom=# \dt
  public | shopping_cart         | table | gtuser
  public | users                 | table | gtuser
  public | vouchers              | table | gtuser
-(18 rows)
+ public | vouchers_applied      | table | gtuser
+(19 rows)
 
 ## SQL Task Answers
 
