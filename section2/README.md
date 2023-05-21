@@ -90,7 +90,7 @@ ecom=# \dt
 ```
 select member_id, sum(total_price) as total_spending
 from orders
-where is_test_data != 1 and is_deleted != 1
+where is_test_data != '1' and is_deleted != '1'
 group by member_id
 order by sum(total_price) desc
 limit 10
@@ -104,7 +104,7 @@ with
 top10_members_by_spending as (
     select member_id, sum(total_price) as total_spending
     from orders
-    where is_test_data != 1 and is_deleted != 1
+    where is_test_data != '1' and is_deleted != '1'
     group by member_id
     order by sum(total_price) desc
     limit 10
@@ -113,7 +113,7 @@ top10_members_by_spending as (
 user_info as (
     select *
     from users
-    where is_test_data != 1 and is_deleted != 1
+    where is_test_data != '1' and is_deleted != '1'
 )
 
 select 
@@ -126,7 +126,7 @@ select
     , u.dob
 from top10_members_by_spending t
 join user_info u
-    on top10_members_by_spending.member_id = user_info.member_id
+    on t.member_id = u.member_id
 ;
 ```
 
@@ -140,7 +140,7 @@ join user_info u
 ```
 select product_id, sum(quantity) as total_quantity_bought
 from order_details
-where is_test_data != 1 and is_deleted != 1
+where is_test_data != '1' and is_deleted != '1'
 group by product_id
 order by sum(quantity) desc
 limit 3
@@ -154,7 +154,7 @@ with
 top3_frequently_bought_products as (
     select product_id, sum(quantity) as total_quantity_bought
     from order_details
-    where is_test_data != 1 and is_deleted != 1
+    where is_test_data != '1' and is_deleted != '1'
     group by product_id
     order by sum(quantity) desc
     limit 3
@@ -170,10 +170,10 @@ select
 from top3_frequently_bought_products t
 join products as p
     on t.product_id = p.product_id
-        and p.is_test_data != 1 and p.is_deleted != 1
+        and p.is_test_data != '1' and p.is_deleted != '1'
 left join product_category c
     on p.category_id = c.category_id
-        and c.is_test_data != 1 and c.is_deleted != 1
+        and c.is_test_data != '1' and c.is_deleted != '1'
 ;
 ```
 
