@@ -1,7 +1,27 @@
+-- Drop tables that exists
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS customer_address CASCADE;
+DROP TABLE IF EXISTS manufacturer CASCADE;
+DROP TABLE IF EXISTS products CASCADE;
+DROP TABLE IF EXISTS product_category CASCADE;
+DROP TABLE IF EXISTS product_inventory CASCADE;
+DROP TABLE IF EXISTS product_review CASCADE;
+DROP TABLE IF EXISTS product_price_history CASCADE;
+DROP TABLE IF EXISTS product_impressions CASCADE;
+DROP TABLE IF EXISTS product_stats CASCADE;
+DROP TABLE IF EXISTS sessions CASCADE;
+DROP TABLE IF EXISTS shopping_cart CASCADE;
+DROP TABLE IF EXISTS orders CASCADE;
+DROP TABLE IF EXISTS order_details CASCADE;
+DROP TABLE IF EXISTS vouchers_applied CASCADE;
+DROP TABLE IF EXISTS payment_details CASCADE;
+DROP TABLE IF EXISTS shipment CASCADE;
+DROP TABLE IF EXISTS promotion CASCADE;
+DROP TABLE IF EXISTS vouchers CASCADE;
+
 
 -- Data about e-commerce website members (i.e. users / customers)
 
-DROP TABLE IF EXISTS users CASCADE;
 CREATE TABLE users (
 	member_id TEXT NOT NULL ,
 	first_name TEXT NOT NULL ,
@@ -20,7 +40,6 @@ CREATE TABLE users (
 ) PARTITION BY HASH ( member_id );
 
 
-DROP TABLE IF EXISTS customer_address CASCADE;
 CREATE TABLE customer_address (
 	address_id BIGINT NOT NULL ,
 	member_id TEXT NOT NULL ,
@@ -43,7 +62,6 @@ CREATE INDEX idx_customer_address_member_id ON customer_address USING HASH (memb
 
 -- Data about manufacturers
 
-DROP TABLE IF EXISTS manufacturer CASCADE;
 CREATE TABLE manufacturer (
 	manuf_id BIGINT NOT NULL ,
 	manuf_name TEXT ,
@@ -68,7 +86,6 @@ CREATE INDEX idx_manufacturer_manuf_name ON manufacturer USING btree (manuf_name
 
 -- Data about products
 
-DROP TABLE IF EXISTS products CASCADE;
 CREATE TABLE products (
 	product_id BIGINT NOT NULL ,
 	product_name TEXT ,
@@ -93,7 +110,6 @@ CREATE INDEX idx_products_product_name ON products USING btree (product_name);
 CREATE INDEX idx_products_product_desc ON products USING btree (product_desc);
 
 
-DROP TABLE IF EXISTS product_category CASCADE;
 CREATE TABLE product_category (
 	category_id BIGINT NOT NULL ,
 	category_name TEXT ,
@@ -110,7 +126,6 @@ CREATE INDEX idx_product_category_name ON product_category USING btree (category
 CREATE INDEX idx_product_category_desc ON product_category USING btree (category_desc);
 
 
-DROP TABLE IF EXISTS product_inventory CASCADE;
 CREATE TABLE product_inventory (
 	product_id BIGINT NOT NULL ,
 	quantity BIGINT ,
@@ -126,7 +141,6 @@ CREATE TABLE product_inventory (
 
 
 -- Data about product review by members or anonymous users
-DROP TABLE IF EXISTS product_review CASCADE;
 CREATE TABLE product_review (
 	review_id BIGINT NOT NULL ,
 	rating NUMERIC(28, 8) ,
@@ -149,7 +163,6 @@ CREATE INDEX idx_product_review_rating ON product_review USING btree (rating);
 
 -- Data about product statistics
 
-DROP TABLE IF EXISTS product_price_history CASCADE;
 CREATE TABLE product_price_history (
 	product_id BIGINT NOT NULL ,
 	price NUMERIC(28, 8) ,
@@ -164,7 +177,6 @@ CREATE TABLE product_price_history (
 ) PARTITION BY RANGE ( price_end_timestamp );
 
 
-DROP TABLE IF EXISTS product_impressions CASCADE;
 CREATE TABLE product_impressions (
 	member_id TEXT ,
 	product_id BIGINT NOT NULL ,
@@ -188,7 +200,6 @@ CREATE INDEX idx_product_impressions_source_traffic_type ON product_impressions 
 CREATE INDEX idx_product_impressions_event_timestamp ON product_impressions USING btree (event_timestamp);
 
 
-DROP TABLE IF EXISTS product_stats CASCADE;
 CREATE TABLE product_stats (
 	record_date DATE NOT NULL ,
 	product_id BIGINT NOT NULL ,
@@ -210,7 +221,6 @@ CREATE INDEX idx_product_stats_record_date ON product_stats USING brin (record_d
 
 -- Data about web session and shopping cart
 
-DROP TABLE IF EXISTS sessions CASCADE;
 CREATE TABLE sessions (
 	record_date DATE NOT NULL ,
 	session_id BIGINT NOT NULL ,
@@ -234,7 +244,6 @@ CREATE INDEX idx_sessions_user_agent ON sessions USING btree (user_agent);
 CREATE INDEX idx_sessions_device ON sessions USING btree (device);
 
 
-DROP TABLE IF EXISTS shopping_cart CASCADE;
 CREATE TABLE shopping_cart (
 	cart_id BIGINT NOT NULL ,
 	member_id TEXT ,
@@ -256,7 +265,6 @@ CREATE INDEX idx_shopping_cart_member_id ON shopping_cart USING HASH (member_id)
 
 -- Data about orders (i.e purchase transactions)
 
-DROP TABLE IF EXISTS orders CASCADE;
 CREATE TABLE orders (
 	order_id BIGINT NOT NULL ,
 	member_id TEXT ,
@@ -281,7 +289,6 @@ CREATE INDEX idx_orders_status ON orders USING HASH (status);
 CREATE INDEX idx_orders_order_no ON orders USING btree (order_no);
 
 
-DROP TABLE IF EXISTS order_details CASCADE;
 CREATE TABLE order_details (
 	order_id BIGINT NOT NULL ,
 	product_id BIGINT ,
@@ -304,7 +311,6 @@ CREATE TABLE order_details (
 CREATE INDEX idx_order_details_status ON order_details USING HASH (status);
 CREATE INDEX idx_order_details_order_no ON order_details USING btree (order_no);
 
-DROP TABLE IF EXISTS vouchers_applied CASCADE;
 CREATE TABLE vouchers_applied (
 	order_id  BIGINT NOT NULL ,
 	voucher_id BIGINT NOT NULL ,
@@ -318,7 +324,6 @@ CREATE TABLE vouchers_applied (
 ) PARTITION BY HASH ( order_id, voucher_id );
 
 
-DROP TABLE IF EXISTS payment_details CASCADE;
 CREATE TABLE payment_details (
 	payment_id BIGINT NOT NULL ,
 	order_id BIGINT NOT NULL ,
@@ -339,7 +344,6 @@ CREATE INDEX idx_payment_details_status ON payment_details USING HASH (status);
 CREATE INDEX idx_payment_details_type ON payment_details USING HASH (type);
 
 
-DROP TABLE IF EXISTS shipment CASCADE;
 CREATE TABLE shipment (
 	shipping_id BIGINT NOT NULL ,
 	order_id BIGINT ,
@@ -363,7 +367,6 @@ CREATE INDEX idx_shipment_tracking_no ON shipment USING btree (tracking_no);
 
 -- Data about promotions and vouchers
 
-DROP TABLE IF EXISTS promotion CASCADE;
 CREATE TABLE promotion (
 	promotion_id BIGINT NOT NULL ,
 	promotion_desc TEXT ,
@@ -378,7 +381,6 @@ CREATE TABLE promotion (
 ) PARTITION BY HASH ( promotion_id );
 
 
-DROP TABLE IF EXISTS vouchers CASCADE;
 CREATE TABLE vouchers (
 	voucher_id BIGINT NOT NULL ,
 	promotion_id  BIGINT NOT NULL ,
