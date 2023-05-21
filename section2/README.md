@@ -176,3 +176,53 @@ left join product_category c
         and c.is_test_data != 1 and c.is_deleted != 1
 ;
 ```
+
+## Data Analytics Business Use Cases
+
+Here are some interesting analytics use cases that the proposed database design can support.
+
+#### 1. Product statistics
+- page visits
+- product view count
+- product view duratiom
+- product click count
+- product add to cart count
+- product checkout count
+- product purchase count
+- unique user visits to product details page
+- click through rate from product view, add to cart, checkout, purchase, and to return visits.
+- bounce rate for product details page
+- product rating
+
+#### 2. Order statistics
+- return order rate
+- repeat order rate
+- average items per order
+- total number of orders over time
+- revenue per order
+- revenue after promotion
+
+#### 3. Session statistics
+- pages per session
+- peak period
+- average session duration
+- revenue per session
+- average number of orders per session
+- product views or clicks per session
+
+#### 4. Customer statistics
+- conversion rate for repeat visits
+- customer lifetime value
+- revenue per customer
+- voucher usage rate
+- accumulated discount
+- revenue per visit
+- orders per visit
+- order return rate
+
+#### 5. Traffic flow statistics
+- referral vs direct traffic rate
+- click stream analytics
+- top referrals
+- related products of interest
+
