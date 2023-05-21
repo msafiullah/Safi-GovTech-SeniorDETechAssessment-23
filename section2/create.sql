@@ -156,10 +156,12 @@ DROP TABLE IF EXISTS product_impressions;
 CREATE TABLE product_impressions (
 	member_id TEXT ,
 	product_id BIGINT NOT NULL ,
+	session_id BIGINT NOT NULL ,
 	event_timestamp TIMESTAMPTZ ,
 	event_duration_ms NUMERIC(28, 8) ,
 	event_type TEXT ,
-	session_id BIGINT NOT NULL ,
+	source_traffic_url TEXT ,
+	source_traffic_type TEXT ,
 	created_at TIMESTAMPTZ ,
 	modified_at TIMESTAMPTZ ,
 	deleted_at TIMESTAMPTZ ,
