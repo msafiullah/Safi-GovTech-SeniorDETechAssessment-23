@@ -222,7 +222,6 @@ CREATE INDEX idx_product_stats_record_date ON product_stats USING brin (record_d
 -- Data about web session and shopping cart
 
 CREATE TABLE sessions (
-	record_date DATE NOT NULL ,
 	session_id BIGINT NOT NULL ,
 	user_agent TEXT ,
 	device TEXT ,
@@ -236,8 +235,8 @@ CREATE TABLE sessions (
 	is_deleted BOOLEAN ,
 	is_test_data BOOLEAN ,
 	
-	PRIMARY KEY ( record_date, session_id )
-) PARTITION BY RANGE ( record_date );
+	PRIMARY KEY ( session_id )
+) PARTITION BY HASH ( session_id );
 
 CREATE INDEX idx_sessions_member_id ON sessions USING HASH (member_id);
 CREATE INDEX idx_sessions_user_agent ON sessions USING btree (user_agent);
