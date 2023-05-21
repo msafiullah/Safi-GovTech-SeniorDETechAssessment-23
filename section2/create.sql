@@ -304,6 +304,19 @@ CREATE TABLE order_details (
 CREATE INDEX idx_order_details_status ON order_details USING HASH (status);
 CREATE INDEX idx_order_details_order_no ON order_details USING btree (order_no);
 
+DROP TABLE IF EXISTS vouchers_applied;
+CREATE TABLE vouchers_applied (
+	order_id  BIGINT NOT NULL ,
+	voucher_id BIGINT NOT NULL ,
+	created_at TIMESTAMPTZ ,
+	modified_at TIMESTAMPTZ ,
+	deleted_at TIMESTAMPTZ ,
+	is_deleted BOOLEAN ,
+	is_test_data BOOLEAN ,
+	
+	PRIMARY KEY ( order_id, voucher_id )
+) PARTITION BY HASH ( order_id, voucher_id );
+
 
 DROP TABLE IF EXISTS payment_details;
 CREATE TABLE payment_details (
@@ -454,3 +467,9 @@ ALTER TABLE    shopping_cart           ADD CONSTRAINT           fk____shopping_c
 
 ALTER TABLE    vouchers               DROP CONSTRAINT IF EXISTS fk____vouchers____promotion ;
 ALTER TABLE    vouchers                ADD CONSTRAINT           fk____vouchers____promotion               FOREIGN KEY ( promotion_id )    REFERENCES  promotion ( promotion_id )          ;
+
+ALTER TABLE    vouchers_applied       DROP CONSTRAINT IF EXISTS fk____vouchers_applied____orders ;
+ALTER TABLE    vouchers_applied        ADD CONSTRAINT           fk____vouchers_applied____orders          FOREIGN KEY ( order_id )        REFERENCES  orders ( order_id )                 ;
+
+ALTER TABLE    vouchers_applied       DROP CONSTRAINT IF EXISTS fk____vouchers_applied____vouchers ;
+ALTER TABLE    vouchers_applied        ADD CONSTRAINT           fk____vouchers_applied____vouchers          FOREIGN KEY ( voucher_id )    REFERENCES  vouchers ( voucher_id )             ;
