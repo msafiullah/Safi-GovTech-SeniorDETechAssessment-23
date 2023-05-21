@@ -11,4 +11,4 @@ column level.
 
 - For instance, Sales team will have `READ` access to `orders` table, but can only `READ_WRITE` on certain columns.
 
-- Please refer to [RBAC-Access.xlsx](http://google.com) for detailed permission matrix.
+- Please refer to [RBAC-Access.xlsx](https://github.com/msafiullah/Safi-GovTech-SeniorDETechAssessment-23/blob/main/section3/design1/RBAC-Access.xlsx) for detailed permission matrix.
