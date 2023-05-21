@@ -17,7 +17,8 @@ CREATE TABLE users (
 	is_test_data BOOLEAN ,
 	
 	PRIMARY KEY ( member_id )
-);
+) PARTITION BY HASH ( member_id );
+
 
 DROP TABLE IF EXISTS customer_address;
 CREATE TABLE customer_address (
@@ -35,8 +36,8 @@ CREATE TABLE customer_address (
 	is_test_data BOOLEAN ,
 	
 	PRIMARY KEY ( address_id )
-);
-
+) PARTITION BY HASH ( address_id );
+CREATE INDEX idx_customer_address_member_id ON customer_address USING HASH (member_id);
 
 
 
@@ -60,8 +61,8 @@ CREATE TABLE manufacturer (
 	is_test_data BOOLEAN ,
 	
 	PRIMARY KEY ( manuf_id )
-);
-
+) PARTITION BY HASH ( manuf_id );
+CREATE INDEX idx_manufacturer_manuf_name ON manufacturer USING btree (manuf_name);
 
 
 
@@ -71,6 +72,7 @@ DROP TABLE IF EXISTS products;
 CREATE TABLE products (
 	product_id BIGINT NOT NULL ,
 	product_name TEXT ,
+	product_desc TEXT ,
 	manuf_id BIGINT ,
 	unit_price NUMERIC(28, 8) ,
 	unit_weight_kg NUMERIC(28, 8) ,
@@ -84,7 +86,12 @@ CREATE TABLE products (
 	is_test_data BOOLEAN ,
 	
 	PRIMARY KEY ( product_id )
-);
+) PARTITION BY HASH ( product_id );
+CREATE INDEX idx_products_manuf_id ON products USING HASH (manuf_id);
+CREATE INDEX idx_products_category_id ON products USING HASH (category_id);
+CREATE INDEX idx_products_product_name ON products USING btree (product_name);
+CREATE INDEX idx_products_product_desc ON products USING btree (product_desc);
+
 
 DROP TABLE IF EXISTS product_category;
 CREATE TABLE product_category (
@@ -98,7 +105,10 @@ CREATE TABLE product_category (
 	is_test_data BOOLEAN ,
 	
 	PRIMARY KEY ( category_id )
-);
+) PARTITION BY HASH ( category_id );
+CREATE INDEX idx_product_category_name ON product_category USING btree (category_name);
+CREATE INDEX idx_product_category_desc ON product_category USING btree (category_desc);
+
 
 DROP TABLE IF EXISTS product_inventory;
 CREATE TABLE product_inventory (
@@ -111,8 +121,7 @@ CREATE TABLE product_inventory (
 	is_test_data BOOLEAN ,
 	
 	PRIMARY KEY ( product_id )
-);
-
+) PARTITION BY HASH ( product_id );
 
 
 
@@ -131,8 +140,10 @@ CREATE TABLE product_review (
 	is_test_data BOOLEAN ,
 	
 	PRIMARY KEY ( review_id )
-);
-
+) PARTITION BY HASH ( review_id );
+CREATE INDEX idx_product_review_product_id ON product_review USING HASH (product_id);
+CREATE INDEX idx_product_review_member_id ON product_review USING HASH (member_id);
+CREATE INDEX idx_product_review_rating ON product_review USING btree (rating);
 
 
 
@@ -150,7 +161,8 @@ CREATE TABLE product_price_history (
 	is_test_data BOOLEAN ,
 	
 	PRIMARY KEY ( product_id, price_end_timestamp )
-);
+) PARTITION BY RANGE ( price_end_timestamp );
+
 
 DROP TABLE IF EXISTS product_impressions;
 CREATE TABLE product_impressions (
@@ -169,10 +181,16 @@ CREATE TABLE product_impressions (
 	is_test_data BOOLEAN ,
 	
 	PRIMARY KEY ( product_id, session_id )
-);
+) PARTITION BY HASH ( product_id, session_id );
+CREATE INDEX idx_product_impressions_member_id ON product_impressions USING HASH (member_id);
+CREATE INDEX idx_product_impressions_event_type ON product_impressions USING HASH (event_type);
+CREATE INDEX idx_product_impressions_source_traffic_type ON product_impressions USING HASH (source_traffic_type);
+CREATE INDEX idx_product_impressions_event_timestamp ON product_impressions USING btree (event_timestamp);
+
 
 DROP TABLE IF EXISTS product_stats;
 CREATE TABLE product_stats (
+	record_date DATE NOT NULL ,
 	product_id BIGINT NOT NULL ,
 	view_cnt BIGINT ,
 	order_cnt BIGINT ,
@@ -184,9 +202,9 @@ CREATE TABLE product_stats (
 	is_deleted BOOLEAN ,
 	is_test_data BOOLEAN ,
 	
-	PRIMARY KEY ( product_id )
-);
-
+	PRIMARY KEY ( record_date, product_id )
+) PARTITION BY RANGE ( record_date );
+CREATE INDEX idx_product_stats_record_date ON product_stats USING brin (record_date);
 
 
 
@@ -194,6 +212,7 @@ CREATE TABLE product_stats (
 
 DROP TABLE IF EXISTS sessions;
 CREATE TABLE sessions (
+	record_date DATE NOT NULL ,
 	session_id BIGINT NOT NULL ,
 	user_agent TEXT ,
 	device TEXT ,
@@ -207,8 +226,13 @@ CREATE TABLE sessions (
 	is_deleted BOOLEAN ,
 	is_test_data BOOLEAN ,
 	
-	PRIMARY KEY ( session_id )
-);
+	PRIMARY KEY ( record_date, session_id )
+) PARTITION BY RANGE ( record_date );
+
+CREATE INDEX idx_sessions_member_id ON sessions USING HASH (member_id);
+CREATE INDEX idx_sessions_user_agent ON sessions USING btree (user_agent);
+CREATE INDEX idx_sessions_device ON sessions USING btree (device);
+
 
 DROP TABLE IF EXISTS shopping_cart;
 CREATE TABLE shopping_cart (
@@ -225,8 +249,8 @@ CREATE TABLE shopping_cart (
 	is_test_data BOOLEAN ,
 	
 	PRIMARY KEY ( cart_id )
-);
-
+) PARTITION BY HASH ( cart_id );
+CREATE INDEX idx_shopping_cart_member_id ON shopping_cart USING HASH (member_id);
 
 
 
@@ -251,7 +275,11 @@ CREATE TABLE orders (
 	is_test_data BOOLEAN ,
 	
 	PRIMARY KEY ( order_id )
-);
+) PARTITION BY HASH ( order_id );
+CREATE INDEX idx_orders_member_id ON orders USING HASH (member_id);
+CREATE INDEX idx_orders_status ON orders USING HASH (status);
+CREATE INDEX idx_orders_order_no ON orders USING btree (order_no);
+
 
 DROP TABLE IF EXISTS order_details;
 CREATE TABLE order_details (
@@ -271,7 +299,11 @@ CREATE TABLE order_details (
 	is_test_data BOOLEAN ,
 	
 	PRIMARY KEY ( order_id, product_id )
-);
+) PARTITION BY HASH ( order_id, product_id );
+
+CREATE INDEX idx_order_details_status ON order_details USING HASH (status);
+CREATE INDEX idx_order_details_order_no ON order_details USING btree (order_no);
+
 
 DROP TABLE IF EXISTS payment_details;
 CREATE TABLE payment_details (
@@ -288,7 +320,11 @@ CREATE TABLE payment_details (
 	is_test_data BOOLEAN ,
 	
 	PRIMARY KEY ( payment_id )
-);
+) PARTITION BY HASH ( payment_id );
+CREATE INDEX idx_payment_details_order_id ON payment_details USING HASH (order_id);
+CREATE INDEX idx_payment_details_status ON payment_details USING HASH (status);
+CREATE INDEX idx_payment_details_type ON payment_details USING HASH (type);
+
 
 DROP TABLE IF EXISTS shipment;
 CREATE TABLE shipment (
@@ -304,8 +340,11 @@ CREATE TABLE shipment (
 	is_test_data BOOLEAN ,
 	
 	PRIMARY KEY ( shipping_id )
-);
-
+) PARTITION BY HASH ( shipping_id );
+CREATE INDEX idx_shipment_order_id ON shipment USING HASH (order_id);
+CREATE INDEX idx_shipment_address_id ON shipment USING HASH (address_id);
+CREATE INDEX idx_shipment_status ON shipment USING HASH (status);
+CREATE INDEX idx_shipment_tracking_no ON shipment USING btree (tracking_no);
 
 
 
@@ -325,7 +364,10 @@ CREATE TABLE promotion (
 	is_test_data BOOLEAN ,
 	
 	PRIMARY KEY ( promotion_id )
-);
+) PARTITION BY HASH ( promotion_id );
+CREATE INDEX idx_promotion_product_id ON promotion USING HASH (product_id);
+CREATE INDEX idx_promotion_voucher_id ON promotion USING HASH (voucher_id);
+
 
 DROP TABLE IF EXISTS vouchers;
 CREATE TABLE vouchers (
@@ -341,7 +383,8 @@ CREATE TABLE vouchers (
 	is_test_data BOOLEAN ,
 	
 	PRIMARY KEY ( voucher_id )
-);
+) PARTITION BY HASH ( voucher_id );
+CREATE INDEX idx_vouchers_promotion_id ON vouchers USING HASH (promotion_id);
 
 
 
