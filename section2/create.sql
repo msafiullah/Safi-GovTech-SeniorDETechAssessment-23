@@ -354,8 +354,6 @@ DROP TABLE IF EXISTS promotion;
 CREATE TABLE promotion (
 	promotion_id BIGINT NOT NULL ,
 	promotion_desc TEXT ,
-	product_id BIGINT ,
-	voucher_id BIGINT ,
 	status TEXT ,
 	created_at TIMESTAMPTZ ,
 	modified_at TIMESTAMPTZ ,
@@ -365,8 +363,6 @@ CREATE TABLE promotion (
 	
 	PRIMARY KEY ( promotion_id )
 ) PARTITION BY HASH ( promotion_id );
-CREATE INDEX idx_promotion_product_id ON promotion USING HASH (product_id);
-CREATE INDEX idx_promotion_voucher_id ON promotion USING HASH (voucher_id);
 
 
 DROP TABLE IF EXISTS vouchers;
@@ -455,12 +451,6 @@ ALTER TABLE    shopping_cart           ADD CONSTRAINT           fk____shopping_c
 
 ALTER TABLE    shopping_cart          DROP CONSTRAINT IF EXISTS fk____shopping_cart____sessions ;
 ALTER TABLE    shopping_cart           ADD CONSTRAINT           fk____shopping_cart____sessions           FOREIGN KEY ( session_id )      REFERENCES  sessions ( session_id )             ;
-
-ALTER TABLE    promotion              DROP CONSTRAINT IF EXISTS fk____promotion____products ;
-ALTER TABLE    promotion               ADD CONSTRAINT           fk____promotion____products               FOREIGN KEY ( product_id )      REFERENCES  products ( product_id )             ;
-
-ALTER TABLE    promotion              DROP CONSTRAINT IF EXISTS fk____promotion____vouchers ;
-ALTER TABLE    promotion               ADD CONSTRAINT           fk____promotion____vouchers               FOREIGN KEY ( voucher_id )      REFERENCES  vouchers ( voucher_id )             ;
 
 ALTER TABLE    vouchers               DROP CONSTRAINT IF EXISTS fk____vouchers____promotion ;
 ALTER TABLE    vouchers                ADD CONSTRAINT           fk____vouchers____promotion               FOREIGN KEY ( promotion_id )    REFERENCES  promotion ( promotion_id )          ;
