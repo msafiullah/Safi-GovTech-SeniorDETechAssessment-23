@@ -81,3 +81,98 @@ ecom=# \dt
  public | users                 | table | gtuser
  public | vouchers              | table | gtuser
 (18 rows)
+
+## SQL Task Answers
+
+#### 1. Which are the top 10 members by spending
+
+**1A. Query top 10 members by spending.**
+```
+select member_id, sum(total_price) as total_spending
+from orders
+where is_test_data != 1 and is_deleted != 1
+group by member_id
+order by sum(total_price) desc
+limit 10
+;
+```
+
+**1B. Query top 10 members by spending, with their user info.**
+```
+with 
+
+top10_members_by_spending as (
+    select member_id, sum(total_price) as total_spending
+    from orders
+    where is_test_data != 1 and is_deleted != 1
+    group by member_id
+    order by sum(total_price) desc
+    limit 10
+), 
+
+user_info as (
+    select *
+    from users
+    where is_test_data != 1 and is_deleted != 1
+)
+
+select 
+    t.member_id
+    , t.total_spending
+    , u.first_name
+    , u.last_name
+    , u.mobile_no
+    , u.email
+    , u.dob
+from top10_members_by_spending t
+join user_info u
+    on top10_members_by_spending.member_id = user_info.member_id
+;
+```
+
+#### 2. Which are the top 3 items that are frequently brought by members
+
+- Assuming "frequently bought" refers to highest quantity of products bought (i.e. purchase transaction completed) by any members.
+- Also, order doesn't have to be considered delivered or fullfilled yet fall into this count.
+- Potentially returned items are still considered in this count.
+
+**2A. Query top 3 frequently bought products.**
+```
+select product_id, sum(quantity) as total_quantity_bought
+from order_details
+where is_test_data != 1 and is_deleted != 1
+group by product_id
+order by sum(quantity) desc
+limit 3
+;
+```
+
+**2B. Query top 3 frequently bought products, with product and category info.**
+```
+with 
+
+top3_frequently_bought_products as (
+    select product_id, sum(quantity) as total_quantity_bought
+    from order_details
+    where is_test_data != 1 and is_deleted != 1
+    group by product_id
+    order by sum(quantity) desc
+    limit 3
+)
+
+select 
+    t.product_id
+    , t.total_quantity_bought
+    , p.product_name
+    , p.unit_weight_kg
+    , c.category_name
+    , c.category_desc
+from top3_frequently_bought_products t
+join products as p
+    on t.product_id = p.product_id
+        and p.is_test_data != 1 and p.is_deleted != 1
+left join product_category c
+    on p.category_id = c.category_id
+        and c.is_test_data != 1 and c.is_deleted != 1
+;
+```
