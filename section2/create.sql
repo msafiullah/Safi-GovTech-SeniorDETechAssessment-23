@@ -390,74 +390,74 @@ CREATE INDEX idx_vouchers_promotion_id ON vouchers USING HASH (promotion_id);
 
 -- Add Foreign Key constraints for all tables
 
-ALTER TABLE    customer_address       DROP CONSTRAINT fk____customer_address____users ;
-ALTER TABLE    customer_address        ADD CONSTRAINT fk____customer_address____users           FOREIGN KEY ( member_id )       REFERENCES  users ( member_id )                 ;
+ALTER TABLE    customer_address       DROP CONSTRAINT IF EXISTS fk____customer_address____users ;
+ALTER TABLE    customer_address        ADD CONSTRAINT           fk____customer_address____users           FOREIGN KEY ( member_id )       REFERENCES  users ( member_id )                 ;
 
-ALTER TABLE    payment_details        DROP CONSTRAINT fk____payment_details____orders ;
-ALTER TABLE    payment_details         ADD CONSTRAINT fk____payment_details____orders           FOREIGN KEY ( order_id )        REFERENCES  orders ( order_id )                 ;
+ALTER TABLE    payment_details        DROP CONSTRAINT IF EXISTS fk____payment_details____orders ;
+ALTER TABLE    payment_details         ADD CONSTRAINT           fk____payment_details____orders           FOREIGN KEY ( order_id )        REFERENCES  orders ( order_id )                 ;
 
-ALTER TABLE    orders                 DROP CONSTRAINT fk____orders____users ;
-ALTER TABLE    orders                  ADD CONSTRAINT fk____orders____users                     FOREIGN KEY ( member_id )       REFERENCES  users ( member_id )                 ;
+ALTER TABLE    orders                 DROP CONSTRAINT IF EXISTS fk____orders____users ;
+ALTER TABLE    orders                  ADD CONSTRAINT           fk____orders____users                     FOREIGN KEY ( member_id )       REFERENCES  users ( member_id )                 ;
 
-ALTER TABLE    orders                 DROP CONSTRAINT fk____orders____payment_details ;
-ALTER TABLE    orders                  ADD CONSTRAINT fk____orders____payment_details           FOREIGN KEY ( payment_id )      REFERENCES  payment_details ( payment_id )      ;
+ALTER TABLE    orders                 DROP CONSTRAINT IF EXISTS fk____orders____payment_details ;
+ALTER TABLE    orders                  ADD CONSTRAINT           fk____orders____payment_details           FOREIGN KEY ( payment_id )      REFERENCES  payment_details ( payment_id )      ;
 
-ALTER TABLE    order_details          DROP CONSTRAINT fk____order_details____orders ;
-ALTER TABLE    order_details           ADD CONSTRAINT fk____order_details____orders             FOREIGN KEY ( order_id )        REFERENCES  orders ( order_id )                 ;
+ALTER TABLE    order_details          DROP CONSTRAINT IF EXISTS fk____order_details____orders ;
+ALTER TABLE    order_details           ADD CONSTRAINT           fk____order_details____orders             FOREIGN KEY ( order_id )        REFERENCES  orders ( order_id )                 ;
 
-ALTER TABLE    order_details          DROP CONSTRAINT fk____order_details____products ;
-ALTER TABLE    order_details           ADD CONSTRAINT fk____order_details____products           FOREIGN KEY ( product_id )      REFERENCES  products ( product_id )             ;
+ALTER TABLE    order_details          DROP CONSTRAINT IF EXISTS fk____order_details____products ;
+ALTER TABLE    order_details           ADD CONSTRAINT           fk____order_details____products           FOREIGN KEY ( product_id )      REFERENCES  products ( product_id )             ;
 
-ALTER TABLE    product_impressions    DROP CONSTRAINT fk____product_impressions____users ;
-ALTER TABLE    product_impressions     ADD CONSTRAINT fk____product_impressions____users        FOREIGN KEY ( product_id )      REFERENCES  users ( product_id )                ;
+ALTER TABLE    product_impressions    DROP CONSTRAINT IF EXISTS fk____product_impressions____users ;
+ALTER TABLE    product_impressions     ADD CONSTRAINT           fk____product_impressions____users        FOREIGN KEY ( product_id )      REFERENCES  users ( product_id )                ;
 
-ALTER TABLE    product_impressions    DROP CONSTRAINT fk____product_impressions____sessions ;
-ALTER TABLE    product_impressions     ADD CONSTRAINT fk____product_impressions____sessions     FOREIGN KEY ( session_id )      REFERENCES  sessions ( session_id )             ;
+ALTER TABLE    product_impressions    DROP CONSTRAINT IF EXISTS fk____product_impressions____sessions ;
+ALTER TABLE    product_impressions     ADD CONSTRAINT           fk____product_impressions____sessions     FOREIGN KEY ( session_id )      REFERENCES  sessions ( session_id )             ;
 
-ALTER TABLE    product_inventory      DROP CONSTRAINT fk____product_inventory____products ;
-ALTER TABLE    product_inventory       ADD CONSTRAINT fk____product_inventory____products       FOREIGN KEY ( product_id )      REFERENCES  products ( product_id )             ;
+ALTER TABLE    product_inventory      DROP CONSTRAINT IF EXISTS fk____product_inventory____products ;
+ALTER TABLE    product_inventory       ADD CONSTRAINT           fk____product_inventory____products       FOREIGN KEY ( product_id )      REFERENCES  products ( product_id )             ;
 
-ALTER TABLE    product_price_history  DROP CONSTRAINT fk____product_price_history____products ;
-ALTER TABLE    product_price_history   ADD CONSTRAINT fk____product_price_history____products   FOREIGN KEY ( product_id )      REFERENCES  products ( product_id )             ;
+ALTER TABLE    product_price_history  DROP CONSTRAINT IF EXISTS fk____product_price_history____products ;
+ALTER TABLE    product_price_history   ADD CONSTRAINT           fk____product_price_history____products   FOREIGN KEY ( product_id )      REFERENCES  products ( product_id )             ;
 
-ALTER TABLE    product_review         DROP CONSTRAINT fk____product_review____users ;
-ALTER TABLE    product_review          ADD CONSTRAINT fk____product_review____users             FOREIGN KEY ( member_id )       REFERENCES  users ( member_id )                 ;
+ALTER TABLE    product_review         DROP CONSTRAINT IF EXISTS fk____product_review____users ;
+ALTER TABLE    product_review          ADD CONSTRAINT           fk____product_review____users             FOREIGN KEY ( member_id )       REFERENCES  users ( member_id )                 ;
 
-ALTER TABLE    product_review         DROP CONSTRAINT fk____product_review____products ;
-ALTER TABLE    product_review          ADD CONSTRAINT fk____product_review____products          FOREIGN KEY ( product_id )      REFERENCES  products ( product_id )             ;
+ALTER TABLE    product_review         DROP CONSTRAINT IF EXISTS fk____product_review____products ;
+ALTER TABLE    product_review          ADD CONSTRAINT           fk____product_review____products          FOREIGN KEY ( product_id )      REFERENCES  products ( product_id )             ;
 
-ALTER TABLE    product_stats          DROP CONSTRAINT fk____product_stats____products ;
-ALTER TABLE    product_stats           ADD CONSTRAINT fk____product_stats____products           FOREIGN KEY ( product_id )      REFERENCES  products ( product_id )             ;
+ALTER TABLE    product_stats          DROP CONSTRAINT IF EXISTS fk____product_stats____products ;
+ALTER TABLE    product_stats           ADD CONSTRAINT           fk____product_stats____products           FOREIGN KEY ( product_id )      REFERENCES  products ( product_id )             ;
 
-ALTER TABLE    products               DROP CONSTRAINT fk____products____manufacturer ;
-ALTER TABLE    products                ADD CONSTRAINT fk____products____manufacturer            FOREIGN KEY ( manuf_id )        REFERENCES  manufacturer ( manuf_id )           ;
+ALTER TABLE    products               DROP CONSTRAINT IF EXISTS fk____products____manufacturer ;
+ALTER TABLE    products                ADD CONSTRAINT           fk____products____manufacturer            FOREIGN KEY ( manuf_id )        REFERENCES  manufacturer ( manuf_id )           ;
 
-ALTER TABLE    products               DROP CONSTRAINT fk____products____product_category ;
-ALTER TABLE    products                ADD CONSTRAINT fk____products____product_category        FOREIGN KEY ( category_id )     REFERENCES  product_category ( category_id )    ;
+ALTER TABLE    products               DROP CONSTRAINT IF EXISTS fk____products____product_category ;
+ALTER TABLE    products                ADD CONSTRAINT           fk____products____product_category        FOREIGN KEY ( category_id )     REFERENCES  product_category ( category_id )    ;
 
-ALTER TABLE    sessions               DROP CONSTRAINT fk____sessions____users ;
-ALTER TABLE    sessions                ADD CONSTRAINT fk____sessions____users                   FOREIGN KEY ( member_id )       REFERENCES  users ( member_id )                 ;
+ALTER TABLE    sessions               DROP CONSTRAINT IF EXISTS fk____sessions____users ;
+ALTER TABLE    sessions                ADD CONSTRAINT           fk____sessions____users                   FOREIGN KEY ( member_id )       REFERENCES  users ( member_id )                 ;
 
-ALTER TABLE    shipment               DROP CONSTRAINT fk____shipment____orders ;
-ALTER TABLE    shipment                ADD CONSTRAINT fk____shipment____orders                  FOREIGN KEY ( order_id )        REFERENCES  orders ( order_id )                 ;
+ALTER TABLE    shipment               DROP CONSTRAINT IF EXISTS fk____shipment____orders ;
+ALTER TABLE    shipment                ADD CONSTRAINT           fk____shipment____orders                  FOREIGN KEY ( order_id )        REFERENCES  orders ( order_id )                 ;
 
-ALTER TABLE    shipment               DROP CONSTRAINT fk____shipment____customer_address ;
-ALTER TABLE    shipment                ADD CONSTRAINT fk____shipment____customer_address        FOREIGN KEY ( address_id )      REFERENCES  customer_address ( address_id )     ;
+ALTER TABLE    shipment               DROP CONSTRAINT IF EXISTS fk____shipment____customer_address ;
+ALTER TABLE    shipment                ADD CONSTRAINT           fk____shipment____customer_address        FOREIGN KEY ( address_id )      REFERENCES  customer_address ( address_id )     ;
 
-ALTER TABLE    shopping_cart          DROP CONSTRAINT fk____shopping_cart____users ;
-ALTER TABLE    shopping_cart           ADD CONSTRAINT fk____shopping_cart____users              FOREIGN KEY ( member_id )       REFERENCES  users ( member_id )                 ;
+ALTER TABLE    shopping_cart          DROP CONSTRAINT IF EXISTS fk____shopping_cart____users ;
+ALTER TABLE    shopping_cart           ADD CONSTRAINT           fk____shopping_cart____users              FOREIGN KEY ( member_id )       REFERENCES  users ( member_id )                 ;
 
-ALTER TABLE    shopping_cart          DROP CONSTRAINT fk____shopping_cart____products ;
-ALTER TABLE    shopping_cart           ADD CONSTRAINT fk____shopping_cart____products           FOREIGN KEY ( product_id )      REFERENCES  products ( product_id )             ;
+ALTER TABLE    shopping_cart          DROP CONSTRAINT IF EXISTS fk____shopping_cart____products ;
+ALTER TABLE    shopping_cart           ADD CONSTRAINT           fk____shopping_cart____products           FOREIGN KEY ( product_id )      REFERENCES  products ( product_id )             ;
 
-ALTER TABLE    shopping_cart          DROP CONSTRAINT fk____shopping_cart____sessions ;
-ALTER TABLE    shopping_cart           ADD CONSTRAINT fk____shopping_cart____sessions           FOREIGN KEY ( session_id )      REFERENCES  sessions ( session_id )             ;
+ALTER TABLE    shopping_cart          DROP CONSTRAINT IF EXISTS fk____shopping_cart____sessions ;
+ALTER TABLE    shopping_cart           ADD CONSTRAINT           fk____shopping_cart____sessions           FOREIGN KEY ( session_id )      REFERENCES  sessions ( session_id )             ;
 
-ALTER TABLE    promotion              DROP CONSTRAINT fk____promotion____products ;
-ALTER TABLE    promotion               ADD CONSTRAINT fk____promotion____products               FOREIGN KEY ( product_id )      REFERENCES  products ( product_id )             ;
+ALTER TABLE    promotion              DROP CONSTRAINT IF EXISTS fk____promotion____products ;
+ALTER TABLE    promotion               ADD CONSTRAINT           fk____promotion____products               FOREIGN KEY ( product_id )      REFERENCES  products ( product_id )             ;
 
-ALTER TABLE    promotion              DROP CONSTRAINT fk____promotion____vouchers ;
-ALTER TABLE    promotion               ADD CONSTRAINT fk____promotion____vouchers               FOREIGN KEY ( voucher_id )      REFERENCES  vouchers ( voucher_id )             ;
+ALTER TABLE    promotion              DROP CONSTRAINT IF EXISTS fk____promotion____vouchers ;
+ALTER TABLE    promotion               ADD CONSTRAINT           fk____promotion____vouchers               FOREIGN KEY ( voucher_id )      REFERENCES  vouchers ( voucher_id )             ;
 
-ALTER TABLE    vouchers               DROP CONSTRAINT fk____vouchers____promotion ;
-ALTER TABLE    vouchers                ADD CONSTRAINT fk____vouchers____promotion               FOREIGN KEY ( promotion_id )    REFERENCES  promotion ( promotion_id )          ;
+ALTER TABLE    vouchers               DROP CONSTRAINT IF EXISTS fk____vouchers____promotion ;
+ALTER TABLE    vouchers                ADD CONSTRAINT           fk____vouchers____promotion               FOREIGN KEY ( promotion_id )    REFERENCES  promotion ( promotion_id )          ;
