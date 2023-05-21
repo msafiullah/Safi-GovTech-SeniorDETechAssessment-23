@@ -62,7 +62,7 @@ ecom=# \dt
 ```
 
  Schema |         Name          |       Type        | Owner  
---------+-----------------------+-------------------+--------
+--------|-----------------------|-------------------|--------
  public | customer_address      | partitioned table | gtuser
  public | manufacturer          | partitioned table | gtuser
  public | order_details         | partitioned table | gtuser
