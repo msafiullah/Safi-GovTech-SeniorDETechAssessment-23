@@ -68,7 +68,8 @@ Look for the `applications_YYYYMMDD_HH.csv` files in `applications_successful` a
 
 - The airflow DAG has three tasks that are run in sequence.
 
-![Screenshot of Airflow DAG - ss-airflow-dag.png](https://raw.githubusercontent.com/msafiullah/Safi-GovTech-SeniorDETechAssessment-23/main/section1/ss-airflow-dag.png?token=GHSAT0AAAAAACC3L4CAHYFMMTDNJSCI2YUWZDIOSYA)
+![Screenshot of Airflow DAG - ss-airflow-dag.png](https://github.com/msafiullah/Safi-GovTech-SeniorDETechAssessment-23/blob/main/section1/ss-airflow-dag.png)
+_Image Link: [ss-airflow-dag.png](https://github.com/msafiullah/Safi-GovTech-SeniorDETechAssessment-23/blob/main/section1/ss-airflow-dag.png)_
 
 | Task S/N | Task ID | Description
 |--|--|--|
@@ -79,9 +80,10 @@ Look for the `applications_YYYYMMDD_HH.csv` files in `applications_successful` a
 # ETL Log
 - Log is ouput to STDOUT (i.e. console) if you are running the ETL script on your local machine.
 - Log is capured and accessible via Airflow's logs page if you deploy the ETL DAG to Airflow.
-![Screenshot of ETL logs in Airflow - ss-airflow-etl-log.png](https://raw.githubusercontent.com/msafiullah/Safi-GovTech-SeniorDETechAssessment-23/main/section1/ss-airflow-etl-log.png?token=GHSAT0AAAAAACC3L4CAOQWQVLMHHZAMEEMUZDIOM7A)
+![Screenshot of ETL logs in Airflow - ss-airflow-etl-log.png](https://github.com/msafiullah/Safi-GovTech-SeniorDETechAssessment-23/blob/main/section1/ss-airflow-etl-log.png)
+_Image Link: [ss-airflow-etl-log.png](https://github.com/msafiullah/Safi-GovTech-SeniorDETechAssessment-23/blob/main/section1/ss-airflow-etl-log.png)_
 - Logs are also accessible on Airflow Worker nodes at `$AIRFLOW_HOME/logs/dag_id=safi_ecommerce_membership_processing_etl/`
-- You can find sample log file here: `Safi-GovTech-SeniorDETechAssessment-23/section1/sample_log_file.log`
+- You can find sample log file here: [Safi-GovTech-SeniorDETechAssessment-23/section1/sample_log_file.log](https://github.com/msafiullah/Safi-GovTech-SeniorDETechAssessment-23/blob/main/section1/sample_log_file.log)
 
 # Known Issues
 
