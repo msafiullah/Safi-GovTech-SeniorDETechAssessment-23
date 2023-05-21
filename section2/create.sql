@@ -409,7 +409,10 @@ ALTER TABLE    order_details          DROP CONSTRAINT IF EXISTS fk____order_deta
 ALTER TABLE    order_details           ADD CONSTRAINT           fk____order_details____products           FOREIGN KEY ( product_id )      REFERENCES  products ( product_id )             ;
 
 ALTER TABLE    product_impressions    DROP CONSTRAINT IF EXISTS fk____product_impressions____users ;
-ALTER TABLE    product_impressions     ADD CONSTRAINT           fk____product_impressions____users        FOREIGN KEY ( product_id )      REFERENCES  users ( product_id )                ;
+ALTER TABLE    product_impressions     ADD CONSTRAINT           fk____product_impressions____users        FOREIGN KEY ( member_id )       REFERENCES  users ( member_id )                 ;
+
+ALTER TABLE    product_impressions    DROP CONSTRAINT IF EXISTS fk____product_impressions____products ;
+ALTER TABLE    product_impressions     ADD CONSTRAINT           fk____product_impressions____products     FOREIGN KEY ( product_id )      REFERENCES  products ( product_id )             ;
 
 ALTER TABLE    product_impressions    DROP CONSTRAINT IF EXISTS fk____product_impressions____sessions ;
 ALTER TABLE    product_impressions     ADD CONSTRAINT           fk____product_impressions____sessions     FOREIGN KEY ( session_id )      REFERENCES  sessions ( session_id )             ;
