@@ -61,27 +61,27 @@ Password: gtpassword
 ecom=# \dt
 ```
 
- Schema |         Name          | Type  | Owner 
---------|-----------------------|-------|--------
- public | customer_address      | table | gtuser
- public | manufacturer          | table | gtuser
- public | order_details         | table | gtuser
- public | orders                | table | gtuser
- public | payment_details       | table | gtuser
- public | product_category      | table | gtuser
- public | product_impressions   | table | gtuser
- public | product_inventory     | table | gtuser
- public | product_price_history | table | gtuser
- public | product_review        | table | gtuser
- public | product_stats         | table | gtuser
- public | products              | table | gtuser
- public | promotion             | table | gtuser
- public | sessions              | table | gtuser
- public | shipment              | table | gtuser
- public | shopping_cart         | table | gtuser
- public | users                 | table | gtuser
- public | vouchers              | table | gtuser
- public | vouchers_applied      | table | gtuser
+ Schema |         Name          |       Type        | Owner  
+--------+-----------------------+-------------------+--------
+ public | customer_address      | partitioned table | gtuser
+ public | manufacturer          | partitioned table | gtuser
+ public | order_details         | partitioned table | gtuser
+ public | orders                | partitioned table | gtuser
+ public | payment_details       | partitioned table | gtuser
+ public | product_category      | partitioned table | gtuser
+ public | product_impressions   | partitioned table | gtuser
+ public | product_inventory     | partitioned table | gtuser
+ public | product_price_history | partitioned table | gtuser
+ public | product_review        | partitioned table | gtuser
+ public | product_stats         | partitioned table | gtuser
+ public | products              | partitioned table | gtuser
+ public | promotion             | partitioned table | gtuser
+ public | sessions              | partitioned table | gtuser
+ public | shipment              | partitioned table | gtuser
+ public | shopping_cart         | partitioned table | gtuser
+ public | users                 | partitioned table | gtuser
+ public | vouchers              | partitioned table | gtuser
+ public | vouchers_applied      | partitioned table | gtuser
 (19 rows)
 
 ## SQL Task Answers
